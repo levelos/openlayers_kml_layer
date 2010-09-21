@@ -1,0 +1,8 @@
+; $Id: 
+name = OpenLayers KML
+description = Provides KML 
+core = 6.x
+package = OpenLayers
+dependencies[] = openlayers
+dependencies[] = content
+dependencies[] = filefield
