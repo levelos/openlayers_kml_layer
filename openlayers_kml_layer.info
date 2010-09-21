@@ -1,6 +1,6 @@
 ; $Id: 
 name = OpenLayers KML
-description = Provides KML 
+description = Content types configured as KML automatically create openlayer layers and associate them with presets.
 core = 6.x
 package = OpenLayers
 dependencies[] = openlayers
