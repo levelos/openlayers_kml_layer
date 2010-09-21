@@ -183,31 +183,24 @@ function openlayers_kml_layer_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
  * Implementation of hook_form_alter().
  */
 function openlayers_kml_layer_form_alter(&$form, $form_state, $form_id) {
+  // this is a KML node; add the list of available map presets
   if (isset($form['#node']) && $kml_field = variable_get('openlayers_kml_layer_type_' . $form['#node']->type, FALSE)) {
     $options = array();
     foreach(openlayers_presets() as $preset) {
       $options[$preset->name] = $preset->title;
     }
-    $form['openlayers_kml_layer'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Openlayers KML'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
-    );
     
     $field = $form[$kml_field];
-    $form['openlayers_kml_layer'][$kml_field] = $field;
-    unset($form[$kml_field]);
-    
     $default = isset($form['#node']->nid) ? variable_get('openlayers_kml_layer_node_presets_' . $form['#node']->nid, -1) : -1;
-    $form['openlayers_kml_layer']['openlayers_kml_layer_presets'] = array(
+    $form['openlayers_kml_layer_presets'] = array(
       '#type' => 'select',
       '#title' => t('Map presets'),
       '#multiple' => TRUE,
       '#description' => t('Select one or more map presets to add this KML file to.'),
       '#options' => $options,
       '#default_value' => $default,
-      '#weight' => 100
+      '#weight' => $form[$kml_field]['#weight'] + 1
     );
   }
 }
+
